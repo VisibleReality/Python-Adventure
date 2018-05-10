@@ -45,27 +45,19 @@ class CaseInsensitively(object):
 		return self.__s == other
 # End of copied code
 
-roomDefinitions = open("pythonGameData.py", "r")
+# Define some other variables
+gameOverText = "Game Over."
 
-while True:
-	line = roomDefinitions.readline()
-	if line.strip() == "#EndFile":
-		break
-	else:
-		exec(line.strip())
-
-roomDefinitions.close()
-
-# # Rooms. Format is (Prompt, Options, Destinations, Actions (actions is a snippet of python code that will be evaluated))
-# # You could make this read from a file if you would prefer.
-# start = Room("Starting story element", ["room1", "room2"], ["room1", "room2"])
-# room1 = Room("Room1", ["room2", "room3"], ["room2", "room3"])
-# room2 = Room("Room2", [], ["endGame"], ["gameEnded = True"])
-# room3 = Room("Room3", [], ["room2"])
-
-# Define the starting values for the game
-currentRoom = start
-gameEnded = False
+def readData():
+	roomDefinitions = open("pythonGameData.py", "r")
+	# while True:
+	# 	line = roomDefinitions.readline()
+	# 	if line.strip() == "#EndFile":
+	# 		break
+	# 	else:
+	# 		exec(line.strip(), globals())
+	exec(roomDefinitions.read(), globals())
+	roomDefinitions.close()
 
 # Gets user input and verifies that it is a valid option.
 def getInput(currentRoom):
@@ -73,11 +65,18 @@ def getInput(currentRoom):
 		if currentRoom.options == []: # If the room has no options, just print the prompt and return None
 			print(currentRoom.prompt)
 			return None
-		# This looks horrible but all it does is ask for input with the prompt in the format <prompt> (<options>) > _
-		response = input(currentRoom.prompt + " (" + ", ".join(currentRoom.options) + ")> ")
-		if CaseInsensitively(response.strip()) in currentRoom.options: # Then, we check if the response is a valid option, ignoring case.
+		optionText = "" # Reset the optionText string
+		for individualOption in currentRoom.options: # Create a nice numbered list for the options
+			optionText = optionText + str(currentRoom.options.index(individualOption) + 1) + ". " + individualOption + ", "
+		optionText = optionText[:-2] # Trim off the last two characters
+		response = input(currentRoom.prompt + "\n(" + optionText + ")\n> ") # Ask for user input
+		if response.isdigit(): # If they've picked a number, use the option that had that number
+			response = int(response)
+			if response <= len(currentRoom.options):
+				return currentRoom.options[response - 1].lower()
+		elif CaseInsensitively(response.strip()) in currentRoom.options: # Then, we check if the response is a valid option, ignoring case.
 			return response.strip().lower() # Return the response in all lowercase. This helps with comparisons later.
-		else: print("Sorry, that was not a valid option. Try again.") # If that wasn't a valid response, print a message prompting the user to try again.
+		print("Sorry, that was not a valid option. Try again.") # If that wasn't a valid response, print a message prompting the user to try again.
 
 # Handles setting the proper value for the current room
 def handleDestination(currentRoom, index):
@@ -102,16 +101,24 @@ def handleRoom(currentRoom):
 
 # gameOver will run when the game ends.
 def gameOver():
-	print("Game Over.")
+	print(gameOverText)
 
 # Main game loop.
 def game():
 	global currentRoom
 	while True:
 		currentRoom = handleRoom(currentRoom) # Run the code for the current room and set the new room.
-		if gameEnded == True: # If the game has ended, stop the game
+		if gameEnded: # If the game has ended, stop the game
 			gameOver()
 			break
 
+# Read game data
+readData()
+
+# Define the starting values for the game
+currentRoom = start
+gameEnded = False
+
 # Run the game
 game()
+input("Press enter to exit.")
