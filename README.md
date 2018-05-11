@@ -6,7 +6,7 @@ Probably has a bunch of bugs, and is a security risk, but I'm not planning for a
 
 ## "Documentation" (if you could even call it that)
 
-The data in PythonGame.py is a starting point. You should add data and your own functions in pythonGameData.py.
+The data in pythonGame.py is a starting point. You should add data and your own functions in pythonGameData.py.
 You can define your own functions and variables in pythonGameData.py
 
 ### Rooms
@@ -37,3 +37,7 @@ which allow you to add and remove options.
 ### Ending the game
 
 To end the game, just set `gameEnded` to `True`. This means that the game will end once the current room has finished. You can set custom game over text by writing `gameOverText = <your message>` in pythonGameData.py.
+
+### File Hash Verification
+
+By default, the game verifies the sha256 hash of the data file to improve security. You can disable this by setting `fileHashVerification` to `False`. This will create a warning when the game runs. You can generate a hash of `pythonGameData.py` by running `pythonGameHashTool.py` and adding the generated hash to `pythonGame.py`.

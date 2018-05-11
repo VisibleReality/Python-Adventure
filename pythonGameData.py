@@ -1,7 +1,8 @@
 # Python game definition file.
-# These lines will be executed before the game runs.
+# This file will be executed before the game runs.
+# Remember to hash this file with pythonGameHashTool.py and edit pythonGame.py after modifying this file.
 
-gameOverText = "Game Over.\nHi Tim, I'm finally finished with this 'game engine'. What do you think?"
+gameOverText = "Game Over."
 
 import time
 

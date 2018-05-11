@@ -1,3 +1,10 @@
+# Define the hash of pythonGameData.py for security.
+fileHashVerification = True # Set to false to disable hash verification. Only recommended for testing purposes.
+fileHash = "5cc742e43f1fec88dca9e83faa0a8a639a59635bc60e2175cedb0502557a9d9c" # Place the sha256 hash of pythonGameData.py here.
+import hashlib
+
+import sys
+
 # Define the 'room' class which holds all room info
 class Room:
 	# Define the room attributes
@@ -51,14 +58,32 @@ class CaseInsensitively(object):
 
 # Define the starting values for the game
 gameOverText = "Game Over."
-currentRoom = start
+currentRoom = "start"
 gameEnded = False
 
 # Read the game data file and execute it
 def readData():
-	roomDefinitions = open("pythonGameData.py", "r")
-	exec(roomDefinitions.read(), globals())
-	roomDefinitions.close()
+	fileHashCheck = open("pythonGameData.py", "rb")
+	actualFileHash = hashlib.sha256(fileHashCheck.read()).hexdigest()
+	fileHashCheck.close()
+	if fileHashVerification == False:
+		print("Warning! FileHashVerification is off!")
+		print("pythonGameData.py may have been modified.")
+		print("FileHashVerification should be on unless testing.")
+		answer = input("Are you sure you wish to run the game! (y/n) > ")
+		if answer[0].lower() != "y":
+			sys.exit()
+	if (actualFileHash == fileHash) or (fileHashVerification == False):
+		roomDefinitions = open("pythonGameData.py", "r")
+		exec(roomDefinitions.read(), globals())
+		roomDefinitions.close()
+	else:
+		print("Game data verificaton failed!")
+		print("Game data file may have been tampered with!")
+		print("Please check pythonGameData.py. If you trust it, set fileHashVerification to False.")
+		input("Press enter to exit.")
+		sys.exit()
+
 
 # Gets user input and verifies that it is a valid option.
 def getInput(currentRoom):
@@ -115,7 +140,7 @@ def game():
 
 # Read game data
 readData()
-
+currentRoom = eval(currentRoom)
 
 # Run the game
 game()
