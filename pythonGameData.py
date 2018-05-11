@@ -1,52 +1,3 @@
-# HEY TIM!
-# DON'T READ THIS FILE
-# IT CONTAINS SPOILERS FOR THE GAME
-# LIKE SERIOUSLY
-# DON'T DO IT
-# Sincerely, Alexander.
-
-# (You can read it after you play the game though, that's fine.)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Python game definition file.
 # These lines will be executed before the game runs.
 
@@ -101,7 +52,3 @@ castleKilled = Room("You charge at the monster.\nYou very quickly realise your m
 	[],
 	["gameOver"],
 	["gameEnded = True"])
-
-#EndFile
-# The program will stop reading at that line.
-# If you don't include that, the program will hang.

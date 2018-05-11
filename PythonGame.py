@@ -1,10 +1,12 @@
 # Define the 'room' class which holds all room info
 class Room:
+	# Define the room attributes
 	prompt = ""
 	options = []
 	destinations = []
 	actions = []
 
+	# Define the __init__ method which means you can easily set all required attributes
 	def __init__(self, prompt, options, destinations, actions = None):
 		self.prompt = prompt
 		self.options = options
@@ -14,11 +16,13 @@ class Room:
 		else:
 			self.actions = actions
 
+	# Define a method which allows you to add an option to an existing room
 	def addOption(self, option, destination, action = None):
 		self.options = self.options + [option]
 		self.destinations = self.destinations + [destination]
 		self.actions = self.actions + [action]
 
+	# Define a method which allows you to remove an option from an existing room.
 	def removeOption(self, option):
 		index = self.options.index(option)
 		self.options.pop(index)
@@ -45,17 +49,14 @@ class CaseInsensitively(object):
 		return self.__s == other
 # End of copied code
 
-# Define some other variables
+# Define the starting values for the game
 gameOverText = "Game Over."
+currentRoom = start
+gameEnded = False
 
+# Read the game data file and execute it
 def readData():
 	roomDefinitions = open("pythonGameData.py", "r")
-	# while True:
-	# 	line = roomDefinitions.readline()
-	# 	if line.strip() == "#EndFile":
-	# 		break
-	# 	else:
-	# 		exec(line.strip(), globals())
 	exec(roomDefinitions.read(), globals())
 	roomDefinitions.close()
 
@@ -115,9 +116,6 @@ def game():
 # Read game data
 readData()
 
-# Define the starting values for the game
-currentRoom = start
-gameEnded = False
 
 # Run the game
 game()
