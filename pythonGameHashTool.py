@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # PythonGame hash tool.
 # It is recommended to hash your game data file, and store that hash in pythonGame.py to improve security.
 

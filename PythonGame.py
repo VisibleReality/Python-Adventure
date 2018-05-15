@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Define the hash of pythonGameData.py for security.
 fileHashVerification = True # Set to false to disable hash verification. Only recommended for testing purposes.
 fileHash = "5cc742e43f1fec88dca9e83faa0a8a639a59635bc60e2175cedb0502557a9d9c" # Place the sha256 hash of pythonGameData.py here.
