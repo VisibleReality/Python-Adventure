@@ -5,9 +5,12 @@
 
 # Import the hashlib module
 import hashlib
+import sys
 
-# Define some variables
-fileLocation = "pythonGameData.py"
+if len(sys.argv) > 1:
+	fileLocation = sys.argv[1]
+else:
+	fileLocation = "pythonGameData.py"
 
 file = open(fileLocation, "rb")
 fileHash = hashlib.sha256(file.read()).hexdigest()
