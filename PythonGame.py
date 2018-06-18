@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+'''
+Python text based adventure game engine.
+By VisibleReality
+Version 1.01
+'''
+
+
 # Define the hash of pythonGameData.py for security.
 fileHashVerification = True # Set to false to disable hash verification. Only recommended for testing purposes.
 fileHash = "5cc742e43f1fec88dca9e83faa0a8a639a59635bc60e2175cedb0502557a9d9c" # Place the sha256 hash of pythonGameData.py here.
@@ -9,6 +16,13 @@ import sys
 
 # Define the 'room' class which holds all room info
 class Room:
+	'''
+	The Room class defines a room in the game.
+	A room has a prompt, which is text that will be printed to the user,
+	some options, which is a list of options which will be printed to the user,
+	some desinations, which is where the options will go,
+	and, optionally, some actions, which will be custom code to be executed if a corresponding option is chosen.
+	'''
 	# Define the room attributes
 	prompt = ""
 	options = []
@@ -24,6 +38,7 @@ class Room:
 			self.actions = [None] * (len(destinations))
 		else:
 			self.actions = actions
+		assert len(self.options) == len(self.destinations) == len(self.actions)
 
 	# Define a method which allows you to add an option to an existing room
 	def addOption(self, option, destination, action = None):
