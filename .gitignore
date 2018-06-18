@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Remove sublime workspace and project files.
+*.sublime-project
+*.sublime-workspace
