@@ -29,7 +29,6 @@ def columnList(obj, cols=4, columnwise=True, gap=4):
 		item/s from the next column. This is the effective spacing
 		between columns based on the maximum len() of the list items.
 	"""
-
 	sobj = [str(item) for item in obj]
 	if cols > len(sobj): cols = len(sobj)
 	max_len = max([len(item) for item in sobj])
@@ -42,10 +41,31 @@ def columnList(obj, cols=4, columnwise=True, gap=4):
 	printer = '\n'.join([
 		''.join([c.ljust(max_len + gap) for c in p])
 		for p in plist])
-	print printer
+	print(printer)
+
+def cd(directory):
+	'''Changes the current directory, checks if it is a directory first.'''
+	if os.path.isdir(directory):
+		os.chdir(directory)
+	else:
+		print(directory + " is not a directory")
+
+def ls(cwd):
+	fileList = os.listdir(cwd)
+	newFileList = []
+	for file in fileList: # Add file description to each file listing.
+		fullPath = os.path.abspath(file)
+		if len(file) >= 40:
+			file = file[:37] + "..."
+		if os.path.isfile(fullPath):
+			newFileList.append("f>" + file)
+		elif os.path.isdir(fullPath):
+			newFileList.append("d>" + file)
+		else:
+			newFileList.append(" >" + file)
+	columnList(newFileList)
 
 def chooseFile():
-	cwd = os.getcwd() # Get the current working directory
 	# Define the help message
 	helpString = '''Opening Python-Adventure Game File.
 Commands:
@@ -64,23 +84,27 @@ Commands:
 '''
 	print(helpString)
 	while True:
+		cwd = os.getcwd() # Get the current working directory
 		while True:
 			command = input(cwd + "> ")
 			if command != "":
 				break
-		commandSplit = command.split(" ")
-		if commandSplit[0] == "cd"
-			commandArgument = " ".join(commandSplit[1:])
-			if os.path.isdir
-
-		fileList = os.listdir(cwd)
-		newFileList = []
-		for file in fileList: # Add file description to each file listing.
-			fullPath = os.path.abspath(file)
-			if os.path.isfile(fullPath):
-				newFileList.append("f>" + file)
-			elif os.path.isfile(fullPath):
-				newFileList.append("d>" + file)
+		# Check what the command is
+		if command[:2] == "cd":
+			cd(command[3:])
+		elif command[:2] == "ls":
+			ls(cwd)
+		elif command[:4] == "open":
+			if os.path.isfile(command[5:]):
+				return command[5:]
 			else:
-				newFileList.append("o>" + file)
-		columnList(newFileList)
+				print(command[5:] + " is not a file.")
+		elif command[:4] == "help":
+			print(helpString)
+		elif command[:4] == "exit":
+			return None
+		else:
+			print(command + " is not a valid command. Type 'help' for help.")
+
+
+print(chooseFile())
