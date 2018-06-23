@@ -7,10 +7,11 @@ Todo: Documentation
 
 # Import required modules
 import os
-
+import sys
 import math
 
 # This code has been taken from https://stackoverflow.com/questions/1524126/how-to-print-a-list-more-nicely/
+# I have no idea how it works.
 def columnList(obj, cols=4, columnwise=True, gap=4):
 	"""
 	Print the given list in evenly-spaced columns.
@@ -106,5 +107,23 @@ Commands:
 		else:
 			print(command + " is not a valid command. Type 'help' for help.")
 
+def editor():
+	
 
-print(chooseFile())
+def main():
+	while True:
+		print("Welcome to Python Adventure Creator.")
+		print("Please choose an option.")
+		print("1. Edit an existing game.")
+		print("2. Create a new game.")
+		print("3. Exit.")
+		choice = input("> ").strip().lower()
+		if choice[0] == "1" or choice[:4] == "edit":
+			fileName = chooseFile()
+			editor(fileName)
+		elif choice[0] == "2" or choice[:5] == "create" or choice[:3] == "new":
+			editor(None)
+		elif choice[0] == "3" or choice[:4] == "exit" or choice[:4] == "quit" or choice[0] == q:
+			sys.exit()
+		else:
+			print("That is not a valid choice. Please try again.")
