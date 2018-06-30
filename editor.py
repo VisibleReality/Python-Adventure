@@ -10,6 +10,37 @@ import os
 import sys
 import math
 
+class Room:
+	# Define the room attributes
+	prompt = ""
+	options = []
+	destinations = []
+	actions = []
+
+	# Define the __init__ method which means you can easily set all required attributes
+	def __init__(self, prompt, options, destinations, actions = None):
+		self.prompt = prompt
+		self.options = options
+		self.destinations = destinations
+		if actions == None:
+			self.actions = [None] * (len(destinations))
+		else:
+			self.actions = actions
+
+	# Define a method which allows you to add an option to an existing room
+	def addOption(self, option, destination, action = None):
+		self.options = self.options + [option]
+		self.destinations = self.destinations + [destination]
+		self.actions = self.actions + [action]
+
+	# Define a method which allows you to remove an option from an existing room.
+	def removeOption(self, option):
+		index = self.options.index(option)
+		self.options.pop(index)
+		self.destinations.pop(index)
+		self.actions.pop(index)
+
+
 # This code has been taken from https://stackoverflow.com/questions/1524126/how-to-print-a-list-more-nicely/
 # I have no idea how it works.
 def columnList(obj, cols=4, columnwise=True, gap=4):
@@ -108,7 +139,7 @@ Commands:
 			print(command + " is not a valid command. Type 'help' for help.")
 
 def editor():
-	
+
 
 def main():
 	while True:
@@ -123,7 +154,9 @@ def main():
 			editor(fileName)
 		elif choice[0] == "2" or choice[:5] == "create" or choice[:3] == "new":
 			editor(None)
-		elif choice[0] == "3" or choice[:4] == "exit" or choice[:4] == "quit" or choice[0] == q:
+		elif choice[0] == "3" or choice[:4] == "exit" or choice[:4] == "quit" or choice[0] == "q":
 			sys.exit()
 		else:
 			print("That is not a valid choice. Please try again.")
+
+main()
